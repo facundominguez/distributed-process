@@ -158,6 +158,7 @@ import Control.Distributed.Process.Internal.Trace.Types
   , TraceEvent(..)
   , traceEvent
   , traceLogFmt
+  , enableTrace
   )
 import Control.Distributed.Process.Internal.Trace.Tracer
   ( traceController
@@ -268,6 +269,7 @@ startDefaultTracer node =
         go node' = do
           registerTraceController node'
           pid <- forkProcess node' defaultTracer
+          enableTrace (localTracer node') pid
           return (Just pid)
 
         registerTraceController :: LocalNode -> IO ()
